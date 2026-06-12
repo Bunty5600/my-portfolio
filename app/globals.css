@@ -1,0 +1,324 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* Removed unknown at-rule @custom-variant which caused a CSS validator warning.
+  If you need a Tailwind custom variant, define it in your Tailwind config instead. */
+
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-geist-sans), 'Geist Fallback';
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback';
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-purple: var(--purple);
+  --color-purple-bright: var(--purple-bright);
+  --color-blue: var(--blue);
+  --color-glow: var(--glow);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+}
+
+:root {
+  /* Light / white theme (default) */
+  --background: #d2cdcd;
+  --foreground: #0a0a1a;
+  --card: #f7f7fb;
+  --card-foreground: #0a0a1a;
+  --popover: #f5f5f7;
+  --popover-foreground: #0a0a1a;
+  --primary: #6b21a8; /* purple */
+  --primary-foreground: #ffffff;
+  --secondary: #eef2ff;
+  --secondary-foreground: #0a0a1a;
+  --muted: #f3f4f6;
+  --muted-foreground: #374151;
+  --accent: #7c3aed;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --border: rgba(10,10,26,0.06);
+  --input: rgba(10,10,26,0.06);
+  --ring: rgba(99,102,241,0.35);
+
+  --purple: #6b21a8;
+  --purple-bright: #7c3aed;
+  --blue: #334155;
+  --glow: rgba(124,58,237,0.18);
+
+  --radius: 0.75rem;
+}
+
+/* Dark theme override (applies when .dark is present on html) */
+.dark {
+  --background: oklch(0.13 0.03 275);
+  --foreground: oklch(0.99 0 0);
+  --card: oklch(0.18 0.035 277);
+  --card-foreground: oklch(0.99 0 0);
+  --popover: oklch(0.16 0.035 277);
+  --popover-foreground: oklch(0.99 0 0);
+  --primary: oklch(0.55 0.24 295);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.24 0.04 277);
+  --secondary-foreground: oklch(0.99 0 0);
+  --muted: oklch(0.24 0.04 277);
+  --muted-foreground: oklch(0.72 0.02 280);
+  --accent: oklch(0.6 0.2 260);
+  --accent-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.62 0.22 25);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.55 0.24 295);
+
+  --purple: oklch(0.55 0.24 295);
+  --purple-bright: oklch(0.6 0.25 300);
+  --blue: oklch(0.62 0.19 258);
+  --glow: oklch(0.55 0.24 295 / 30%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    line-height: 1.7;
+    font-feature-settings: 'liga' 1, 'calt' 1, 'ss01' 1;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+  p,
+  li {
+    text-wrap: pretty;
+  }
+}
+
+/* Thin purple custom scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.55 0.24 295 / 60%) transparent;
+}
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: oklch(0.55 0.24 295 / 60%);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.6 0.25 300 / 80%);
+}
+
+@utility glass {
+  background: color-mix(in oklab, white 4%, transparent);
+  border: 1px solid color-mix(in oklab, var(--purple) 30%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+@utility text-glow {
+  text-shadow: 0 0 24px oklch(0.55 0.24 295 / 45%);
+}
+
+.bg-grid {
+  background-image: radial-gradient(
+    oklch(0.55 0.24 295 / 12%) 1px,
+    transparent 1px
+  );
+  background-size: 32px 32px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Dark-mode starfield background (small stars) */
+/* Starfield placed on body to ensure visibility above page background */
+.dark body::before,
+html.dark body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0; /* behind page content but above base backgrounds */
+  pointer-events: none;
+  background-color: #000;
+  /* scattered small stars (denser + varied sizes) */
+  background-image:
+    radial-gradient(circle at 2% 6%, rgba(255,255,255,1) 1.4px, transparent 1.4px),
+    radial-gradient(circle at 8% 26%, rgba(255,255,255,0.98) 1.1px, transparent 1.1px),
+    radial-gradient(circle at 14% 44%, rgba(255,255,255,0.96) 0.9px, transparent 0.9px),
+    radial-gradient(circle at 20% 12%, rgba(255,255,255,0.94) 1px, transparent 1px),
+    radial-gradient(circle at 26% 72%, rgba(255,255,255,0.92) 0.9px, transparent 0.9px),
+    radial-gradient(circle at 32% 38%, rgba(255,255,255,0.95) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 38% 84%, rgba(255,255,255,0.9) 0.8px, transparent 0.8px),
+    radial-gradient(circle at 44% 24%, rgba(255,255,255,0.93) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.88) 0.8px, transparent 0.8px),
+    radial-gradient(circle at 56% 14%, rgba(255,255,255,0.96) 1.3px, transparent 1.3px),
+    radial-gradient(circle at 62% 66%, rgba(255,255,255,0.9) 0.7px, transparent 0.7px),
+    radial-gradient(circle at 68% 30%, rgba(255,255,255,0.94) 1px, transparent 1px),
+    radial-gradient(circle at 74% 86%, rgba(255,255,255,0.88) 0.8px, transparent 0.8px),
+    radial-gradient(circle at 80% 42%, rgba(255,255,255,0.9) 0.9px, transparent 0.9px),
+    radial-gradient(circle at 86% 8%, rgba(255,255,255,0.98) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 92% 58%, rgba(255,255,255,0.86) 0.7px, transparent 0.7px),
+    radial-gradient(circle at 12% 10%, rgba(255,255,255,0.88) 0.7px, transparent 0.7px),
+    radial-gradient(circle at 28% 46%, rgba(255,255,255,0.9) 0.8px, transparent 0.8px),
+    radial-gradient(circle at 34% 6%, rgba(255,255,255,0.95) 1.1px, transparent 1.1px),
+    radial-gradient(circle at 46% 58%, rgba(255,255,255,0.9) 0.85px, transparent 0.85px),
+    radial-gradient(circle at 58% 40%, rgba(255,255,255,0.92) 1px, transparent 1px),
+    radial-gradient(circle at 70% 78%, rgba(255,255,255,0.87) 0.75px, transparent 0.75px),
+    radial-gradient(circle at 82% 22%, rgba(255,255,255,0.94) 1.15px, transparent 1.15px),
+    radial-gradient(circle at 4% 76%, rgba(255,255,255,0.86) 0.7px, transparent 0.7px),
+    radial-gradient(circle at 16% 34%, rgba(255,255,255,0.9) 0.8px, transparent 0.8px),
+    radial-gradient(circle at 38% 18%, rgba(255,255,255,0.91) 0.9px, transparent 0.9px),
+    radial-gradient(circle at 54% 88%, rgba(255,255,255,0.85) 0.7px, transparent 0.7px),
+    radial-gradient(circle at 66% 12%, rgba(255,255,255,0.93) 1.05px, transparent 1.05px),
+    radial-gradient(circle at 78% 54%, rgba(255,255,255,0.88) 0.8px, transparent 0.8px),
+    radial-gradient(circle at 90% 4%, rgba(255,255,255,0.95) 1.2px, transparent 1.2px);
+  background-repeat: no-repeat;
+  opacity: 0.6; /* stronger visibility */
+  mix-blend-mode: screen;
+}
+
+/* Galaxy glow layer with slow rotation for a nebula/galaxy effect */
+.dark body::after,
+html.dark body::after {
+  content: "";
+  position: fixed;
+  inset: -10% -10% -10% -10%;
+  z-index: 0; /* same stacking as stars, behind content */
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side at 30% 40%, rgba(124,58,237,0.22) 0%, rgba(124,58,237,0.08) 18%, transparent 45%),
+    radial-gradient(closest-side at 70% 60%, rgba(99,102,241,0.18) 0%, rgba(99,102,241,0.06) 16%, transparent 42%),
+    radial-gradient(closest-side at 50% 30%, rgba(56,189,248,0.10) 0%, transparent 28%);
+  filter: blur(36px) saturate(140%);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  transform: translateZ(0) rotate(0deg) scale(1.02);
+  animation: galaxy-rotate 40s linear infinite;
+}
+
+@keyframes galaxy-rotate {
+  from { transform: translateZ(0) rotate(0deg) scale(1.02); }
+  to { transform: translateZ(0) rotate(360deg) scale(1.02); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Subtle twinkle effect by animating opacity */
+  html.dark::before {
+    animation: star-twinkle 6s linear infinite;
+  }
+  @keyframes star-twinkle {
+    0% { opacity: 0.12; }
+    50% { opacity: 0.18; }
+    100% { opacity: 0.12; }
+  }
+}
+
+/* Ensure the star layer is visible above the page background in dark mode.
+   When Tailwind applies a dark background to the body, that would cover html's
+   pseudo-element. Make the body transparent in dark mode and place the
+   background on html instead (keeps other styles intact). Also provide a
+   prefers-color-scheme fallback so stars show if `.dark` isn't toggled. */
+body {
+  position: relative;
+  z-index: 1;
+}
+.dark body,
+html.dark body {
+  background-color: transparent !important;
+}
+
+/* prefers-color-scheme fallback */
+@media (prefers-color-scheme: dark) {
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-color: #000;
+    background-image:
+      radial-gradient(circle at 4% 8%, rgba(255,255,255,0.98) 1px, transparent 1px),
+      radial-gradient(circle at 12% 22%, rgba(255,255,255,0.92) 0.9px, transparent 0.9px),
+      radial-gradient(circle at 18% 58%, rgba(255,255,255,0.88) 0.8px, transparent 0.8px),
+      radial-gradient(circle at 28% 12%, rgba(255,255,255,0.9) 1px, transparent 1px),
+      radial-gradient(circle at 36% 72%, rgba(255,255,255,0.85) 0.7px, transparent 0.7px),
+      radial-gradient(circle at 44% 38%, rgba(255,255,255,0.95) 1px, transparent 1px),
+      radial-gradient(circle at 52% 84%, rgba(255,255,255,0.8) 0.6px, transparent 0.6px),
+      radial-gradient(circle at 60% 24%, rgba(255,255,255,0.9) 0.9px, transparent 0.9px),
+      radial-gradient(circle at 68% 50%, rgba(255,255,255,0.86) 0.8px, transparent 0.8px),
+      radial-gradient(circle at 76% 14%, rgba(255,255,255,0.94) 1px, transparent 1px),
+      radial-gradient(circle at 82% 66%, rgba(255,255,255,0.78) 0.6px, transparent 0.6px),
+      radial-gradient(circle at 92% 30%, rgba(255,255,255,0.9) 0.9px, transparent 0.9px);
+    background-repeat: no-repeat;
+    opacity: 0.28;
+    mix-blend-mode: screen;
+    animation: star-twinkle 6s linear infinite;
+  }
+  html {
+    background-color: var(--background);
+  }
+  body {
+    background-color: transparent !important;
+  }
+}
