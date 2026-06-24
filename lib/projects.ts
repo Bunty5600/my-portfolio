@@ -25,7 +25,7 @@ export const projects: Project[] = [
     stack: ['Python', 'FastAPI', 'React', 'TypeScript', 'GitHub API'],
     categories: ['AI/ML', 'Full-Stack'],
     github: 'https://github.com/Bunty5600/Codelens',
-    deploy:''
+    deploy:'https://codelens-htex.vercel.app/'
   },
   {
     title: 'SemanticPDF',
